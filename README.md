@@ -16,7 +16,7 @@ conda activate socket_env
 pip install requirements.txt
 ```
 
-## Running 
+## Run version_2 
 1. Run server.py Once run it will run continously
 ```
 python version_2/server.py
