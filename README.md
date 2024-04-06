@@ -15,3 +15,14 @@ conda activate socket_env
 ```
 pip install requirements.txt
 ```
+
+## Running 
+1. Run server.py Once run it will run continously
+```
+python version_2/server.py
+```
+
+2. Then Run client.py Its one go run
+```
+python version_2/client.py
+```
