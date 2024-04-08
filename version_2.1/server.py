@@ -16,7 +16,15 @@ MESSAGE_SIZE = 1024
 
 
 def server_function(msg:Dict)->Dict:
-    pass
+    a = msg.get('a',0)
+    b = msg.get('b',0)
+
+    # Your Cluster Function
+
+    return {
+        "message": "Hello Buddy",
+        "answer": a+b
+    }
 
 
 
@@ -28,12 +36,12 @@ async def handle_echo(reader: asyncio.StreamReader, writer: asyncio.StreamWriter
             break  # Exit if connection closed/no data
 
         # Deserialize the incoming data to a dictionary
-        msg = json.loads(data.decode())
+        msg:Dict = json.loads(data.decode())
         addr = writer.get_extra_info('peername') # Get client address.
         print(f"Received from {addr}: {msg}")
 
         # Respond to the client with a serialized JSON message.
-        response = {"message": "Hello Buddy"}
+        response = server_function(msg=msg)
         writer.write(json.dumps(response).encode())
         await writer.drain() # Ensure the response is sent.
 

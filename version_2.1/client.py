@@ -15,24 +15,22 @@ MESSAGE_SIZE = 1024
 async def run_client():
     # Establishes a connection to the server using the host and port specified in the settings.
     reader, writer = await asyncio.open_connection(HOST, PORT)
-
-    for timer in [1,5,2,6,3,4,9,8,7]:
-        message = {}
-
+    
+    for a,b in [(1,2),(3,4)]:
         # Create a message dictionary and serialize it to a JSON string
-        message = {"timer": timer , "content": f"Hello world {timer}!"}
+        message = {"a": a ,"b":b,  "content": f"Hello world!"}
         writer.write(json.dumps(message).encode())
         await writer.drain() # Ensures the message is sent.
 
-    # Await and print server response
-    # Reads data from the connection up to MESSAGE_SIZE bytes.
-    data = await reader.read(MESSAGE_SIZE)
-    
-    # Deserialize the incoming data from JSON format to a dictionary.
-    response = json.loads(data.decode())  
-    print(f"Received: {response}")
+        # Await and print server response
+        # Reads data from the connection up to MESSAGE_SIZE bytes.
+        data = await reader.read(MESSAGE_SIZE)
+        
+        # Deserialize the incoming data from JSON format to a dictionary.
+        response = json.loads(data.decode())  
+        print(f"Received: {response}")
 
-    print("Closing the connection")
+        print("Closing the connection")
     writer.close()  # Close the connection.
     await writer.wait_closed() # Wait until the connection is fully closed.
 
