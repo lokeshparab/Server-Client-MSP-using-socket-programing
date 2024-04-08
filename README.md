@@ -2,7 +2,7 @@
 
 ## Installation
 
-1. Create new environment python verions
+1. Create a new environment Python versions
 ```
 conda -n socket_env python 3.9.13
 ```
@@ -11,18 +11,18 @@ conda -n socket_env python 3.9.13
 conda activate socket_env
 ```
 
-3. Install python dependance
+3. Install python dependence
 ```
 pip install requirements.txt
 ```
 
 ## Run version_2 
-1. Run server.py Once run it will run continously
+1. Run server.py Once run it will run continuously
 ```
-python version_2/server.py
+python version_2.1/server.py
 ```
 
-2. Then Run client.py Its one go run
+2. Then Run client.py It one go run
 ```
-python version_2/client.py
+python version_2.1/client.py
 ```
