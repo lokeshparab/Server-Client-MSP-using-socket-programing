@@ -3,6 +3,8 @@ import json
 from setting import HOST, PORT, MESSAGE_SIZE
 from typing import Dict
 
+""" Worker Cluster Machine"""
+
 """
 HOST = "localhost"
 PORT = 9999
@@ -19,7 +21,8 @@ def server_function(msg:Dict)->Dict:
     a = msg.get('a',0)
     b = msg.get('b',0)
 
-    # Your Cluster Function
+    # Your Cluster Function Individiual Classifer Operation
+    # Your code here
 
     return {
         "message": "Hello Buddy",

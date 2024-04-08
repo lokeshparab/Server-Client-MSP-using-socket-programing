@@ -2,6 +2,7 @@ import asyncio
 import json
 from setting import HOST, PORT, MESSAGE_SIZE
 
+""" Central Machine """
 """
 HOST = "localhost"
 PORT = 9999
