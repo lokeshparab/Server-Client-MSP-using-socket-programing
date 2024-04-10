@@ -13,7 +13,7 @@ conda activate socket_env
 
 3. Install python dependence
 ```
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Run version_2.1 
