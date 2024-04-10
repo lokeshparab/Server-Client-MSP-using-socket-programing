@@ -1,4 +1,5 @@
 import asyncio
+import argparse
 import json
 from setting import HOST, PORT, MESSAGE_SIZE
 
@@ -8,6 +9,18 @@ HOST = "localhost"
 PORT = 9999
 MESSAGE_SIZE = 1024
 """
+# Command line argument parsing
+parser = argparse.ArgumentParser(description='Asyncio Server')
+parser.add_argument('--h', type=str, default=HOST, help='Host address')
+parser.add_argument('-p', '--port', type=int, default=PORT, help='Port number')
+parser.add_argument('--message_size', type=int, default=MESSAGE_SIZE, help='Size of the message buffer')
+
+args = parser.parse_args()
+
+HOST = args.h
+PORT = args.port
+MESSAGE_SIZE = args.message_size
+
 # This section imports necessary modules and variables.
 # asyncio for asynchronous IO operations,
 # json for serializing and deserializing data,
