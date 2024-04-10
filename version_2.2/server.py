@@ -1,0 +1,78 @@
+import asyncio
+import argparse
+import json
+from setting import HOST, PORT, MESSAGE_SIZE
+from typing import Dict
+
+""" Worker Cluster Machine"""
+
+"""
+HOST = "localhost"
+PORT = 9999
+MESSAGE_SIZE = 1024
+"""
+
+# This section imports the necessary modules and variables:
+# asyncio for asynchronous IO operations,
+# json for serializing and deserializing data,
+# and HOST, PORT, MESSAGE_SIZE from setting.py for server configuration.
+
+# Command line argument parsing
+parser = argparse.ArgumentParser(description='Asyncio Server')
+parser.add_argument('--h', type=str, default=HOST, help='Host address')
+parser.add_argument('-p', '--port', type=int, default=PORT, help='Port number')
+parser.add_argument('--message_size', type=int, default=MESSAGE_SIZE, help='Size of the message buffer')
+
+args = parser.parse_args()
+
+HOST = args.h
+PORT = args.port
+MESSAGE_SIZE = args.message_size
+
+
+def server_function(msg:Dict)->Dict:
+    a = msg.get('a',0)
+    b = msg.get('b',0)
+
+    # Your Cluster Function Individiual Classifer Operation
+    # Your code here
+
+    return {
+        "message": "Hello Buddy",
+        "answer": a+b
+    }
+
+
+
+async def handle_echo(reader: asyncio.StreamReader, writer: asyncio.StreamWriter) -> None:
+    # This coroutine handles incoming client connections.
+    while True:
+        data = await reader.read(MESSAGE_SIZE)
+        if not data:
+            break  # Exit if connection closed/no data
+
+        # Deserialize the incoming data to a dictionary
+        msg:Dict = json.loads(data.decode())
+        addr = writer.get_extra_info('peername') # Get client address.
+        print(f"Received from {addr}: {msg}")
+
+        # Respond to the client with a serialized JSON message.
+        response = server_function(msg=msg)
+        writer.write(json.dumps(response).encode())
+        await writer.drain() # Ensure the response is sent.
+
+
+    print("Closing connection")
+    writer.close()  # Close the writer to end the connection.
+    await writer.wait_closed() # Wait until the connection is fully closed.
+
+async def run_server() -> None:
+    # Create and start the server.
+    server = await asyncio.start_server(handle_echo, HOST, PORT)
+    async with server:
+        await server.serve_forever() # Serve requests until manually stopped.
+
+if __name__ == "__main__":
+
+    # If this script is executed as the main program, run the server.
+    asyncio.run(run_server())
